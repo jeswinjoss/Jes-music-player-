@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JesPlayer - Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">Jes Player Pro</div>
+        <div class="nav-content">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="toggleSidebar()">☰</button>
+                <button class="nav-btn" onclick="showPage('dashboard')">📤</button>
+               
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Your Library</h3>
+                
+                <div class="playlist-item" onclick="showPage('liked')">
+                    <div class="playlist-icon">❤️</div>
+                    <span>Liked Songs</span>
+                </div>
+                
+                <div class="playlist-item" onclick="showPage('recent')">
+                    <div class="playlist-icon">🕒</div>
+                    <span>Recently Played</span>
+                </div>
+                <div class="playlist-item" onclick="showPage('saved')">
+                    <div class="playlist-icon">💾</div>
+                    <span>Saved</span>
+                </div>
+                <div class="playlist-item" onclick="showPage('home')">
+                    <div class="playlist-icon">🏠</div>
+                    <span>Home</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="home" class="page active">
+                <h2 class="section-title">Featured Music</h2>
+                <div class="music-grid" id="musicGrid">
+                    <!-- Music cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Library Page -->
+            <div id="library" class="page">
+                <h2 class="section-title">Your Library</h2>
+                <div class="music-grid" id="libraryGrid">
+                    <!-- Library content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page">
+                <div class="dashboard-header">
+                    <h2 class="section-title">Upload Music</h2>
+                    <p>Add your favorite songs to your collection</p>
+                </div>
+                
+                <form class="upload-form" id="uploadForm">
+                    <div class="form-group">
+                        <label for="songTitle">Song Title</label>
+                        <input type="text" id="songTitle" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artistName">Artist Name</label>
+                        <input type="text" id="artistName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="albumName">Album Name</label>
+                        <input type="text" id="albumName" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="audioFile">Audio File</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="audioFile" class="file-input" accept="audio/*" required>
+                            <div class="file-input-display" id="fileInputDisplay">
+                                📁 Choose audio file or drag & drop
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="upload-btn">Upload Song</button>
+                </form>
+            </div>
+
+            <!-- Liked Songs Page -->
+            <div id="liked" class="page">
+                <h2 class="section-title">❤️ Liked Songs</h2>
+                <div class="music-grid" id="likedGrid">
+                    <!-- Liked songs will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Recently Played Page -->
+            <div id="recent" class="page">
+                <h2 class="section-title">🕒 Recently Played</h2>
+                <div class="music-grid" id="recentGrid">
+                    <!-- Recently played songs will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Saved Page -->
+            <div id="saved" class="page">
+                <h2 class="section-title">💾 Saved Songs</h2>
+                <div class="music-grid" id="savedGrid">
+                    <!-- Saved songs will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Player Bar -->
+    <div class="player-bar" id="playerBar">
+        <div class="current-track">
+            <div class="current-album-art" id="currentAlbumArt">🎵</div>
+            <div class="track-info">
+                <h4 id="currentTitle">Select a song</h4>
+                <p id="currentArtist">Unknown Artist</p>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <button class="control-btn" onclick="previousTrack()">⏮</button>
+            <button class="control-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
+            <button class="control-btn" onclick="nextTrack()">⏭</button>
+        </div>
+
+        <div class="progress-container">
+            <span class="time" id="currentTime">0:00</span>
+            <div class="progress-bar" id="progressBar" onclick="seekTo(event)">
+                <div class="progress" id="progress"></div>
+            </div>
+            <span class="time" id="duration">0:00</span>
+        </div>
+
+        <div class="player-extras">
+            <button class="control-btn" id="shuffleBtn" onclick="toggleShuffle()">🔀</button>
+            <button class="control-btn" id="repeatBtn" onclick="toggleRepeat()">🔁</button>
+            <div class="volume-control">
+                <button class="control-btn" onclick="toggleMute()">🔊</button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" onchange="changeVolume(this.value)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
